@@ -1,14 +1,14 @@
-import express, { Request } from "express";
+import express from "express";
 import bodyParser from "body-parser";
 import dotenv from 'dotenv';
 import cors from 'cors';
-import serverless from 'serverless-http';
+import ServerlessHttp from "serverless-http";
 import xhub from 'express-x-hub';
 
 dotenv.config();
 
 const token = process.env.TOKEN || 'token';
-const received_updates: Request[] = [];
+const received_updates = [];
 
 const app = express();
 
@@ -39,8 +39,8 @@ router.post('/instagram', function(req, res) {
     res.sendStatus(200);
 });
 
-app.use('/api/', router);
-export const handler = serverless(app);
+app.use('/.netlify/functions/api/', router);
+export const handler = ServerlessHttp(app);
 
 // app.listen(() => {
 //     console.log("Connected to port: ", app.get('port'));
